@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
+import TreeItem from './TreeItem.js';
+import DragDropMagic from './DragDropMagic.js';
 
 export default class Tree extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
+    this.treeItems = this.props.items.map(this.renderItem.bind(this));
     this.setState({
       items: this.props.items
     });
   }
 
+  componentDidMount() {
+    this.dragDrop = new DragDropMagic(this);
+  }
+
   renderItem(item, key) {
-     const { name, level, id } = item;
-     const style = {
-       marginLeft: level * 10 + 'px'
-     }
-     return (<div id={id} class="item" key={key} style={style}>{name}</div>);
+    return (<TreeItem tree={this} listener={this.props.listener} key={key} item={item}/>);
   }
 
   render() {
-    const renderedItems = this.state.items.map(this.renderItem);
     return (
       <div id="reactTree">
-       { renderedItems }
+       { this.treeItems }
       </div>
     );
   }
