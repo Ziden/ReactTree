@@ -3,9 +3,8 @@ import TreeItem from './TreeItem.js';
 import DragDropMagic from './DragDropMagic.js';
 
 export default class Tree extends Component {
-
   componentWillMount() {
-    this.treeItems = this.props.items.map(this.renderItem.bind(this));
+    this.width = this.props.width;
     this.setState({
       items: this.props.items
     });
@@ -16,13 +15,25 @@ export default class Tree extends Component {
   }
 
   renderItem(item, key) {
-    return (<TreeItem tree={this} listener={this.props.listener} key={key} item={item}/>);
+    return (<TreeItem 
+      tree={this} 
+      width={this.props.width} 
+      tabSize={this.props.tabSize} 
+      listener={this.props.listener} 
+      key={key} 
+      item={item}
+    />);
   }
 
   render() {
+    const style = {
+      width: this.width+'px'
+    }
     return (
-      <div id="reactTree">
-       { this.treeItems }
+      <div>
+      <div id="reactTree" style={style}>
+       { this.state.items.map(this.renderItem.bind(this)) }
+      </div>
       </div>
     );
   }

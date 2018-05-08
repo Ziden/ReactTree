@@ -6,10 +6,16 @@ export default class TreeItem extends Component {
   static style = () => { return {
       padding: '4px',
       border: '1px solid black',
-      width: '150px',
-      borderRadius: '5px'
+      borderRadius: '5px',
     };
   }
+  
+  static itemStyle = () => {
+    return {
+      transition: 'all 0.5s ease'
+    }
+  }
+
 
   componentWillMount() {
     this.setState({
@@ -24,13 +30,14 @@ export default class TreeItem extends Component {
   render() {
     const { name, level, id } = this.state.item;
     const style = TreeItem.style();
-    style.marginLeft = 15 * level;
+    const itemStyle = TreeItem.itemStyle();
+    style.marginLeft = parseInt(this.props.tabSize) * level;
     return (
         <div 
           id={id} 
           draggable="true"
           onClick={this.onClickTreeItem.bind(this)} 
-          className="treeItem">
+          className="treeItem" style={itemStyle}>
             <div className="treeItemContent" style={style}>
               {name}
             </div>

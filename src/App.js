@@ -7,6 +7,8 @@ export default class App extends Component {
   render() {
     return (
       <Tree 
+      width="350"
+      tabSize="20"
       items={MockInput}
       listener={TreeListener}
       />
